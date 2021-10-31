@@ -13,7 +13,7 @@ router.get("/", () => {
       "content-type": "text/html;charset=UTF-8",
     },
   };
-  const response = await fetch('/static/index.html', init);
+  const response = await fetch('/index.html', init);
   return new Response(response.text, init);
 })
 
@@ -157,9 +157,16 @@ addEventListener("fetch", event => {
   event.respondWith(handleEvent(event))
 })
 
+const customKeyModifier = request => {
+  let url = request.url
+  //custom key mapping optional
+  url = url + '/'
+  return mapRequestToAsset(new Request(url, request))
+}
+
 async function handleEvent(event) {
   try {
-    return await getAssetFromKV(event)
+    return await getAssetFromKV(event, {mapRequestToAsset: customKeyModifier})
   } catch (e) {
     let pathname = new URL(event.request.url).pathname
     return new Response(`"${pathname}" not found`, {
