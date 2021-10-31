@@ -7,6 +7,8 @@ route = ""
 zone_id = ""
 compatibility_date = "2021-10-27"
 
+kv_here
+
 [site]
 bucket = "./public" # Add the directory with your static assets!
 entry-point = "./static" # JS folder serving your assets
