@@ -13,7 +13,7 @@ router.get("/", () => {
       "content-type": "text/html;charset=UTF-8",
     },
   };
-  const response = await fetch('/index.html', init);
+  const response = await fetch('static/index.html', init);
   return new Response(response.text, init);
 })
 
