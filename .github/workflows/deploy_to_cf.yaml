@@ -18,5 +18,4 @@ jobs:
           postCommands: |
             echo "*** setting up configurations ***"
             wrangler kv:namespace create DENTIST_TELEGRAM_BOT
-            wrangler kv:key put --binding=DENTIST_TELEGRAM_BOT webhook_url not_setup
             echo "*** All Done ***"
