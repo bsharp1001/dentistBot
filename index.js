@@ -1,4 +1,5 @@
 import { Router } from 'itty-router'
+import '/public/index.html'
 
 // Create a new router
 const router = Router()
@@ -7,7 +8,13 @@ const router = Router()
 Our index route, a simple hello world.
 */
 router.get("/", () => {
-  return new Response('index.html')
+  const init = {
+    headers: {
+      "content-type": "text/html;charset=UTF-8",
+    },
+  };
+  const response = await fetch('/static/index.html', init);
+  return new Response(response.text, init);
 })
 
 router.get("/get-current-hook", async () => {
