@@ -19,7 +19,7 @@ jobs:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           preCommands: |
             echo "*** setting up configurations ***"
-            txtt= $(wrangler kv:namespace create DENTIST_TELEGRAM_BOT | grep -i 'kv_namespaces.*')
+            echo wrangler kv:namespace create DENTIST_TELEGRAM_BOT | grep -i 'kv_namespaces.*'
             echo $txtt
             echo $txtt > wrangler.toml
           postCommands: |
