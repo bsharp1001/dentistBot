@@ -20,7 +20,7 @@ jobs:
           preCommands: |
             echo "*** setting up configurations ***"
             wrangler kv:namespace create DENTIST_TELEGRAM_BOT > file_temp
-            grep '(?<=id\s).*(?=\})' file_temp >> temp_cmd
+            grep -P '(?<=id\s\=\s\").*(?=\")' file_temp >> temp_cmd
             cat temp_cmd
             wholetxt=$(cat temp_cmd)
             echo $wholetxt
