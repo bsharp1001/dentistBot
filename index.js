@@ -45,7 +45,7 @@ router.post("/secreat_chat_patht", async request => {
   DENTIST_TELEGRAM_BOT.put('chat_ids', JSON.stringify(chat_ids));
 })
 
-router.get("/setup_bot", () => {
+router.get("/setup-bot", async () => {
   var url = 'https://api.telegram.org/bot' + BOT_KEY + '/setWebhook';
   const req = {
     body: encodeURIComponent('url') + '=' + encodeURIComponent(BASE_WORKER_URL + '/secreat_chat_patht'),
