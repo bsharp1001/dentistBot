@@ -18,6 +18,8 @@ jobs:
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           postCommands: |
+            echo "Sdsds" > wrangler.toml
+          postCommands: |
             echo "*** setting up configurations ***"
             wrangler kv:namespace create DENTIST_TELEGRAM_BOT
             echo "*** All Done ***"
