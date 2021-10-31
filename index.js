@@ -185,7 +185,7 @@ are passed to the router where your routes are called and the response is sent.
 */
 addEventListener('fetch', (e) => {
   let { pathname } = new URL(e.request.url)
-  if (pathname.includes('static')) {
+  if (pathname.indexOf('static') > -1) {
     return
   }
   e.respondWith(router.handle(e.request))
@@ -193,7 +193,7 @@ addEventListener('fetch', (e) => {
 
 addEventListener('fetch', (e) => {
   let { pathname } = new URL(e.request.url)
-  if (pathname.includes('static')) {
+  if (pathname.indexOf('static') > -1) {
     e.respondWith(handleEvent(e))
   }
   return
