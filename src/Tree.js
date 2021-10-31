@@ -1,8 +1,8 @@
-import React from "react";
-import ReactDOM from 'react-dom';
+import React, { Component } from "react";
+import { render } from "react-dom";
 import SortableTree from "react-sortable-tree";
 
-class App extends React.Component {
+class App extends Component {
   constructor(props) {
     super(props);
 
@@ -41,4 +41,4 @@ class App extends React.Component {
   }
 }
 
-ReactDOM.render(<App />, document.getElementById("root"));
+render(<App />, document.getElementById("root"));
