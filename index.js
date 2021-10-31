@@ -10,6 +10,12 @@ router.get("/", () => {
   return new Response('index.html')
 })
 
+router.get("/get-current-hook", async () => {
+  var wurl = await DENTIST_TELEGRAM_BOT.get('webhook_url');
+  wurl = wurl === null ? 'no_setup' : wurl;
+  return new Response(wurl)
+})
+
 router.get("/getbtns", () => {
   // Decode text like "Hello%20world" into "Hello world"
   let input = DENTIST_TELEGRAM_BOT.get('btns')
@@ -48,13 +54,15 @@ router.post("/secreat_chat_patht", async request => {
 router.get("/setup-bot", async () => {
   var url = 'https://api.telegram.org/bot' + BOT_KEY + '/setWebhook';
   const req = {
-    body: encodeURIComponent('url') + '=' + encodeURIComponent(BASE_WORKER_URL + '/secreat_chat_patht'),
+    body: encodeURIComponent('url') + '=' + encodeURIComponent(BASE_URL + '/secreat_chat_patht'),
     method: "POST",
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
     },
   };
   var res = await fetch(url, req);
+  var webhook_url = BASE_URL + '/secreat_chat_patht';
+  DENTIST_TELEGRAM_BOT.put('webhook_url', webhook_url)
 })
 
 /*
