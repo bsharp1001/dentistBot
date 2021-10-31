@@ -1,0 +1,22 @@
+name: Deploy
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    name: Deploy
+    steps:
+      - uses: actions/checkout@v2
+      - name: Publish
+        uses: cloudflare/wrangler-action@1.3.0
+        with:
+          apiToken: ${{ secrets.CF_API_TOKEN }}
+        postCommands: |
+          echo "*** setting up configurations ***"
+          wrangler kv:namespace create "DENTIST_TELEGRAM_BOT"
+          wrangler kv:key put --binding=DENTIST_TELEGRAM_BOT webhook_url not_setup
+          echo "*** All Done ***"
