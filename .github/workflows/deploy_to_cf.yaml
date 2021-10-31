@@ -20,7 +20,7 @@ jobs:
           preCommands: |
             echo "*** setting up configurations ***"
             wrangler kv:namespace create DENTIST_TELEGRAM_BOT > file_temp
-            echo grep 'kv_namespaces.*' file_temp
+            grep 'kv_namespaces.*' file_temp
           postCommands: |
             kv:key put --binding='DENTIST_TELEGRAM_BOT' 'webhook_url' 'no_setup'
             echo "*** All Done ***"
