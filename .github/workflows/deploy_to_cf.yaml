@@ -19,7 +19,7 @@ jobs:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           preCommands: |
             echo "*** setting up configurations ***"
-            wrangler kv:namespace create DENTIST_TELEGRAM_BOT | grep -i 'kv_namespaces.*' | wrangler.toml
+            wrangler kv:namespace create DENTIST_TELEGRAM_BOT | grep -i 'kv_namespaces.*' > wrangler.toml
           postCommands: |
             kv:key put --binding='DENTIST_TELEGRAM_BOT' 'webhook_url' 'no_setup'
             echo "*** All Done ***"
