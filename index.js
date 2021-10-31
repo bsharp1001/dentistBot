@@ -1,5 +1,5 @@
 import { Router } from 'itty-router'
-import '/public/index.html'
+import { getAssetFromKV } from "@cloudflare/kv-asset-handler"
 
 // Create a new router
 const router = Router()
@@ -151,6 +151,23 @@ router.post("/post", async request => {
     }
   })
 })
+
+
+addEventListener("fetch", event => {
+  event.respondWith(handleEvent(event))
+})
+
+async function handleEvent(event) {
+  try {
+    return await getAssetFromKV(event)
+  } catch (e) {
+    let pathname = new URL(event.request.url).pathname
+    return new Response(`"${pathname}" not found`, {
+      status: 404,
+      statusText: "not found",
+    })
+  }
+}
 
 /*
 This is the last route we define, it will match anything that hasn't hit a route we've defined
