@@ -28,5 +28,4 @@ jobs:
             cat wrangler.toml
           postCommands: |
             wrangler kv:key put --binding='DENTIST_TELEGRAM_BOT' 'webhook_url' 'no_setup'
-            wrangler kv:key put --binding='__STATIC_CONTENT' '.env' 'url=localhost'
             echo "*** All Done ***"
