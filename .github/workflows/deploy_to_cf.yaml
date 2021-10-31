@@ -23,6 +23,7 @@ jobs:
             echo 'kv_namespaces = [ ' >> wrangler.toml
             grep '\{.*\}' file_temp >> wrangler.toml
             echo ' ]' >> wrangler.toml
+            echo wrangler.toml
           postCommands: |
             wrangler kv:key put --binding='DENTIST_TELEGRAM_BOT' 'webhook_url' 'no_setup'
             echo "*** All Done ***"
