@@ -152,15 +152,10 @@ router.post("/post", async request => {
   })
 })
 
-
-addEventListener("fetch", event => {
-  event.respondWith(handleEvent(event))
-})
-
 const customKeyModifier = request => {
   let url = request.url
   //custom key mapping optional
-  url = url + '/'
+  url = url.replace('static/', '');
   return mapRequestToAsset(new Request(url, request))
 }
 
@@ -189,5 +184,8 @@ This snippet ties our worker to the router we deifned above, all incoming reques
 are passed to the router where your routes are called and the response is sent.
 */
 addEventListener('fetch', (e) => {
+  if (e.request.url.includes('static')) {
+    e.respondWith(handleEvent(e))
+  }
   e.respondWith(router.handle(e.request))
 })
