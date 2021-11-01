@@ -144,16 +144,9 @@ router.post("/post", async request => {
   })
 })
 
-const customKeyModifier = request => {
-  let url = request.url
-  //custom key mapping optional
-  url = url.replace('static/', '');
-  return mapRequestToAsset(new Request(url, request))
-}
-
 async function handleEvent(req, event) {
   try {
-    return await getAssetFromKV(event, {mapRequestToAsset: customKeyModifier})
+    return await getAssetFromKV(event)
   } catch (e) {
     let pathname = new URL(event.request.url).pathname
     return new Response(`"${pathname}" not found`, {
@@ -169,7 +162,7 @@ above, therefore it's useful as a 404 (and avoids us hitting worker exceptions, 
 
 Visit any page that doesn't exist (e.g. /foobar) to see it in action.
 */
-//router.all("*", () => handleEvent)
+router.all("*", () => handleEvent)
 
 /*
 This snippet ties our worker to the router we deifned above, all incoming requests
