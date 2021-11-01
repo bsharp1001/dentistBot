@@ -15,7 +15,7 @@ router.get("/", async () => {
     },
   };
   const response = await fetch(BASE_URL + '/index.html', init);
-  return new Response(response.text(), init);
+  return new Response(await response.text(), init);
 })
 
 .get("/get-current-hook", async () => {
