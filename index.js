@@ -45,7 +45,7 @@ router.post("/secreat_chat_patht", async request => {
   if (request.headers.get("Content-Type") === "application/json") {
     fields = await request.json()
   }
-  var chat_ids = DENTIST_TELEGRAM_BOT.get('chat_ids', {'type': 'json'});
+  var chat_ids = DENTIST_TELEGRAM_BOT.get('chat_ids', {'type': 'json'}) || [];
   chat_ids.push(fields.message.chat.id);
   DENTIST_TELEGRAM_BOT.put('chat_ids', JSON.stringify(chat_ids));
 })
@@ -61,7 +61,8 @@ router.get("/setup-bot", async () => {
   };
   var res = await fetch(url, req);
   var webhook_url = BASE_URL + '/secreat_chat_patht';
-  DENTIST_TELEGRAM_BOT.put('webhook_url', webhook_url)
+  DENTIST_TELEGRAM_BOT.put('webhook_url', webhook_url);
+  return new Response('webhook setup was successful');
 })
 
 /*
