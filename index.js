@@ -138,6 +138,7 @@ Try visit /example/hello and see the response.
 
 async function handleEvent(req, event) {
   try {
+    console.DEBUG(getAssetFromKV(event))
     return await getAssetFromKV(event)
   } catch (e) {
     let pathname = new URL(event.request.url).pathname
