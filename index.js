@@ -7,16 +7,7 @@ const router = Router()
 /*
 Our index route, a simple hello world.
 */
-router.get("/", async () => {
-  await __STATIC_CONTENT.put('assets/.env', 'url=none')
-  const init = {
-    headers: {
-      "content-type": "text/html;charset=UTF-8",
-    },
-  };
-  const response = await fetch(BASE_URL + '/index.html', init);
-  return new Response(await response.text(), init);
-})
+router.get("/", handleEvent)
 
 .get("/get-current-hook", async () => {
   var wurl = await DENTIST_TELEGRAM_BOT.get('webhook_url');
