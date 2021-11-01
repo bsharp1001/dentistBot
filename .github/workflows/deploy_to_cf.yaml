@@ -21,6 +21,7 @@ jobs:
             echo "*** setting up configurations ***"
             echo "*** checking DB ***"
             wrangler kv:namespace list > all_ids
+            cat all_ids
             grep -Po '(?<=id\"\:\")[^\}\{]*(?=\",\"title\"\:\"dentist\-bot\-DENTIST)' all_ids > wanted_id
             cat wanted_id
             wholetxt=$(cat wanted_id)
