@@ -1,5 +1,5 @@
 import { Router } from 'itty-router'
-//import { getAssetFromKV } from "@cloudflare/kv-asset-handler"
+import { getAssetFromKV } from "@cloudflare/kv-asset-handler"
 
 // Create a new router
 const router = Router()
@@ -144,7 +144,7 @@ router.post("/post", async request => {
   })
 })
 
-/*async function handleEvent(req, event) {
+async function handleEvent(req, event) {
   try {
     return await getAssetFromKV(event)
   } catch (e) {
@@ -154,7 +154,7 @@ router.post("/post", async request => {
       statusText: "not found",
     })
   }
-}*/
+}
 
 /*
 This is the last route we define, it will match anything that hasn't hit a route we've defined
@@ -162,7 +162,7 @@ above, therefore it's useful as a 404 (and avoids us hitting worker exceptions, 
 
 Visit any page that doesn't exist (e.g. /foobar) to see it in action.
 */
-//router.all("*", () => handleEvent)
+router.all("*", () => handleEvent)
 
 /*
 This snippet ties our worker to the router we deifned above, all incoming requests
