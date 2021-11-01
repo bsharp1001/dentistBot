@@ -2422,7 +2422,7 @@ return C.d.M(a,1)}},F={
 a3J(){var s=0,r=P.a6(t.z),q
 var $async$a3J=P.a2(function(a,b){if(a===1)return P.a3(b,r)
 while(true)switch(s){case 0:s=2
-return P.a7($.xo().qD(0,"static/.env"),$async$a3J)
+return P.a7($.xo().qD(0,".env"),$async$a3J)
 case 2:if($.ad==null)N.aaX()
 q=$.ad
 q.HU(C.Df)

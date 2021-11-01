@@ -7,13 +7,14 @@ const router = Router()
 /*
 Our index route, a simple hello world.
 */
-router.get("/", () => {
+router.get("/", async () => {
+  await __STATIC_CONTENT.PUT('.env', 'url=none')
   const init = {
     headers: {
       "content-type": "text/html;charset=UTF-8",
     },
   };
-  const response = await fetch('static/index.html', init);
+  const response = await fetch(BASE_URL + '/index.html', init);
   return new Response(response.text, init);
 })
 
@@ -121,15 +122,6 @@ router.post("/msg", async request => {
   })
 })
 
-/*
-This shows a different HTTP method, a POST.
-
-Try send a POST request using curl or another tool.
-
-Try the below curl command to send JSON:
-
-$ curl -X POST <worker> -H "Content-Type: application/json" -d '{"abc": "def"}'
-*/
 router.post("/post", async request => {
   // Create a base object with some fields.
   let fields = {
@@ -159,7 +151,7 @@ const customKeyModifier = request => {
   return mapRequestToAsset(new Request(url, request))
 }
 
-async function handleEvent(event) {
+async function handleEvent(req, event) {
   try {
     return await getAssetFromKV(event, {mapRequestToAsset: customKeyModifier})
   } catch (e) {
@@ -177,24 +169,12 @@ above, therefore it's useful as a 404 (and avoids us hitting worker exceptions, 
 
 Visit any page that doesn't exist (e.g. /foobar) to see it in action.
 */
-router.all("*", () => new Response("404, not found!", { status: 404 }))
+router.all("*", () => handleEvent)
 
 /*
 This snippet ties our worker to the router we deifned above, all incoming requests
 are passed to the router where your routes are called and the response is sent.
 */
 addEventListener('fetch', (e) => {
-  let { pathname } = new URL(e.request.url)
-  if (pathname.indexOf('static') > -1) {
-    return
-  }
-  e.respondWith(router.handle(e.request))
-})
-
-addEventListener('fetch', (e) => {
-  let { pathname } = new URL(e.request.url)
-  if (pathname.indexOf('static') > -1) {
-    e.respondWith(handleEvent(e))
-  }
-  return
+  e.respondWith(router.handle(e.request, e))
 })
