@@ -18,13 +18,13 @@ router.get("/", async () => {
   return new Response(response.text, init);
 })
 
-router.get("/get-current-hook", async () => {
+.get("/get-current-hook", async () => {
   var wurl = await DENTIST_TELEGRAM_BOT.get('webhook_url');
   wurl = wurl === null ? 'no_setup' : wurl;
   return new Response(wurl)
 })
 
-router.get("/getbtns", () => {
+.get("/getbtns", () => {
   // Decode text like "Hello%20world" into "Hello world"
   let input = DENTIST_TELEGRAM_BOT.get('btns')
 
@@ -36,7 +36,7 @@ router.get("/getbtns", () => {
   })
 })
 
-router.post("/getbtns", async request => {
+.post("/getbtns", async request => {
   const formData = await request.formData();
   const body = Object.fromEntries(formData);
   let btns = DENTIST_TELEGRAM_BOT.get('btns', {'type': 'json'})
@@ -49,7 +49,7 @@ router.post("/getbtns", async request => {
   })
 })
 
-router.post("/secreat_chat_patht", async request => {
+.post("/secreat_chat_patht", async request => {
   var fields;
   if (request.headers.get("Content-Type") === "application/json") {
     fields = await request.json()
@@ -59,7 +59,7 @@ router.post("/secreat_chat_patht", async request => {
   DENTIST_TELEGRAM_BOT.put('chat_ids', JSON.stringify(chat_ids));
 })
 
-router.get("/setup-bot", async () => {
+.get("/setup-bot", async () => {
   var url = 'https://api.telegram.org/bot' + BOT_KEY + '/setWebhook';
   const req = {
     body: encodeURIComponent('url') + '=' + encodeURIComponent(BASE_URL + '/secreat_chat_patht'),
@@ -79,7 +79,7 @@ URL.
 
 Try visit /example/hello and see the response.
 */
-router.get("/example/:text", ({ params }) => {
+.get("/example/:text", ({ params }) => {
   // Decode text like "Hello%20world" into "Hello world"
   let input = decodeURIComponent(params.text)
 
@@ -97,7 +97,7 @@ router.get("/example/:text", ({ params }) => {
   })
 })
 
-router.post("/msg", async request => {
+.post("/msg", async request => {
   const formData = await request.formData();
   const body = Object.fromEntries(formData);
   var msg = body.msg;
@@ -122,7 +122,7 @@ router.post("/msg", async request => {
   })
 })
 
-router.post("/post", async request => {
+.post("/post", async request => {
   // Create a base object with some fields.
   let fields = {
     "asn": request.cf.asn,
@@ -143,6 +143,7 @@ router.post("/post", async request => {
     }
   })
 })
+.all("*", () => handleEvent)
 
 async function handleEvent(req, event) {
   try {
@@ -162,7 +163,6 @@ above, therefore it's useful as a 404 (and avoids us hitting worker exceptions, 
 
 Visit any page that doesn't exist (e.g. /foobar) to see it in action.
 */
-router.all("*", () => handleEvent)
 
 /*
 This snippet ties our worker to the router we deifned above, all incoming requests
