@@ -8,14 +8,14 @@ const router = Router()
 Our index route, a simple hello world.
 */
 router.get("/", async () => {
-  await __STATIC_CONTENT.PUT('assets/.env', 'url=none')
+  await __STATIC_CONTENT.put('assets/.env', 'url=none')
   const init = {
     headers: {
       "content-type": "text/html;charset=UTF-8",
     },
   };
   const response = await fetch(BASE_URL + '/index.html', init);
-  return new Response(response.text, init);
+  return new Response(response.text(), init);
 })
 
 .get("/get-current-hook", async () => {
