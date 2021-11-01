@@ -1,14 +1,14 @@
 name = "dentist-bot"
 type = "webpack"
 
-account_id = ""
+account_id = "497c9091d4d353c29d9dd3333e0ecc00"
 workers_dev = true
 route = ""
 zone_id = ""
 compatibility_date = "2021-10-27"
 
 kv_namespaces = [ 
-	 { binding = "DENTIST_TELEGRAM_BOT", id = "id_here" }
+	 { binding = "dddd", preview_id = "eb78c7060714456e85fb2aa4c593141e" },
 ]
 
 [site]

@@ -7,15 +7,15 @@ const router = Router()
 /*
 Our index route, a simple hello world.
 */
-router.get("/", handleEvent)
+router.get("/", () => {return new Response('fghgf')} )
 
-.get("/get-current-hook", async () => {
+router.get("/get-current-hook", async () => {
   var wurl = await DENTIST_TELEGRAM_BOT.get('webhook_url');
   wurl = wurl === null ? 'no_setup' : wurl;
   return new Response(wurl)
 })
 
-.get("/getbtns", () => {
+router.get("/getbtns", () => {
   // Decode text like "Hello%20world" into "Hello world"
   let input = DENTIST_TELEGRAM_BOT.get('btns')
 
@@ -27,7 +27,7 @@ router.get("/", handleEvent)
   })
 })
 
-.post("/getbtns", async request => {
+router.post("/getbtns", async request => {
   const formData = await request.formData();
   const body = Object.fromEntries(formData);
   let btns = DENTIST_TELEGRAM_BOT.get('btns', {'type': 'json'})
@@ -40,7 +40,7 @@ router.get("/", handleEvent)
   })
 })
 
-.post("/secreat_chat_patht", async request => {
+router.post("/secreat_chat_patht", async request => {
   var fields;
   if (request.headers.get("Content-Type") === "application/json") {
     fields = await request.json()
@@ -50,7 +50,7 @@ router.get("/", handleEvent)
   DENTIST_TELEGRAM_BOT.put('chat_ids', JSON.stringify(chat_ids));
 })
 
-.get("/setup-bot", async () => {
+router.get("/setup-bot", async () => {
   var url = 'https://api.telegram.org/bot' + BOT_KEY + '/setWebhook';
   const req = {
     body: encodeURIComponent('url') + '=' + encodeURIComponent(BASE_URL + '/secreat_chat_patht'),
@@ -70,7 +70,7 @@ URL.
 
 Try visit /example/hello and see the response.
 */
-.get("/example/:text", ({ params }) => {
+router.get("/example/:text", ({ params }) => {
   // Decode text like "Hello%20world" into "Hello world"
   let input = decodeURIComponent(params.text)
 
@@ -88,7 +88,7 @@ Try visit /example/hello and see the response.
   })
 })
 
-.post("/msg", async request => {
+router.post("/msg", async request => {
   const formData = await request.formData();
   const body = Object.fromEntries(formData);
   var msg = body.msg;
@@ -113,7 +113,7 @@ Try visit /example/hello and see the response.
   })
 })
 
-.post("/post", async request => {
+router.post("/post", async request => {
   // Create a base object with some fields.
   let fields = {
     "asn": request.cf.asn,
@@ -134,11 +134,12 @@ Try visit /example/hello and see the response.
     }
   })
 })
-.all("*", () => handleEvent)
+
+router.get("*", handleEvent)
 
 async function handleEvent(req, event) {
   try {
-    console.DEBUG(getAssetFromKV(event))
+    //console.DEBUG(getAssetFromKV(event))
     return await getAssetFromKV(event)
   } catch (e) {
     let pathname = new URL(event.request.url).pathname
