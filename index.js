@@ -169,7 +169,7 @@ above, therefore it's useful as a 404 (and avoids us hitting worker exceptions, 
 
 Visit any page that doesn't exist (e.g. /foobar) to see it in action.
 */
-router.all("*", () => handleEvent)
+//router.all("*", () => handleEvent)
 
 /*
 This snippet ties our worker to the router we deifned above, all incoming requests
