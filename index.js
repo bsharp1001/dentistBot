@@ -8,7 +8,7 @@ const router = Router()
 Our index route, a simple hello world.
 */
 router.get("/", async () => {
-  await __STATIC_CONTENT.PUT('.env', 'url=none')
+  await __STATIC_CONTENT.PUT('assets/.env', 'url=none')
   const init = {
     headers: {
       "content-type": "text/html;charset=UTF-8",
