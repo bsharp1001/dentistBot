@@ -20,7 +20,10 @@ jobs:
           preCommands: |
             echo "*** setting up configurations ***"
             echo "*** checking DB ***"
-            wholetxt=$(wrangler kv:namespace list | grep -Po '(?<=id\"\:\")[^\}\{]*(?=\",\"title\"\:\"dentist\-bot\-DENTIST)')
+            wrangler kv:namespace list > all_ids
+            grep -Po '(?<=id\"\:\")[^\}\{]*(?=\",\"title\"\:\"dentist\-bot\-DENTIST)') all_ids > wanted_id
+            cat wanted_id
+            wholetxt=$(cat wanted_id)
             if [ -z "${checkk}" ]; then echo "*** DB not added... Adding DB ***" && wrangler kv:namespace create DENTIST_TELEGRAM_BOT > file_temp && grep -Po '(?<=id\s=\s\").*(?=\")' file_temp >> temp_cmd && cat temp_cmd && wholetxt=$(cat temp_cmd); else echo "*** DB exists ***"; fi
             echo $wholetxt
             sed -i "s|id_here|$wholetxt|g" wrangler.toml
