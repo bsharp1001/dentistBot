@@ -45,11 +45,8 @@ router.post("/secreat_chat_patht", async request => {
   if (request.headers.get("Content-Type") === "application/json") {
     fields = await request.json()
   }
-  
-  await DENTIST_TELEGRAM_BOT.put('updat22e', fields.message.chat);
 
-  await DENTIST_TELEGRAM_BOT.put('update', typeof(fields.message));
-  await DENTIST_TELEGRAM_BOT.put('updat2e', typeof(fields.message.chat));
+  await DENTIST_TELEGRAM_BOT.put('updat22e', JSON.stringify(fields.message.chat));
 
   //return new Response(fields)
   var chat_ids = await DENTIST_TELEGRAM_BOT.get('chat_ids', {'type': 'json'}) || [];
