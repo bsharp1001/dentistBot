@@ -21,10 +21,9 @@ jobs:
             echo "*** setting up configurations ***"
             echo "*** checking DB ***"
             wrangler kv:namespace list > all_ids
-            cat all_ids
-            wholetxt=$(grep -Po '(?<=id\"\:\")[^\}\{]*(?=\",\"title\"\:\"dentist\-bot\-DENTIST)' all_ids)
+            wholetxt=$(cat all_ids)
             echo 'wholetext' && cat $wholetxt
-            if [ -z "${checkk}" ]; then echo "*** DB not added... Adding DB ***" && wrangler kv:namespace create DENTIST_TELEGRAM_BOT > file_temp && grep -Po '(?<=id\s=\s\").*(?=\")' file_temp >> temp_cmd && cat temp_cmd && wholetxt=$(cat temp_cmd); else echo "*** DB exists ***"; fi
+            if [ "${wholetxt}" = "[]" ]; then echo "*** DB not added... Adding DB ***" && wrangler kv:namespace create DENTIST_TELEGRAM_BOT > file_temp && grep -Po '(?<=id\s=\s\").*(?=\")' file_temp >> temp_cmd && cat temp_cmd && wholetxt=$(cat temp_cmd); else echo "*** DB exists ***" && grep -Po '(?<=id\"\:\")[^\}\{]*(?=\",\"title\"\:\"dentist\-bot\-DENTIST)' all_ids > txtt && wholetxt=$(cat txtt); fi
             echo $wholetxt
             sed -i "s|id_here|$wholetxt|g" wrangler.toml
             cat wrangler.toml
