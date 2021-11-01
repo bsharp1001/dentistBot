@@ -43,14 +43,20 @@ router.post("/getbtns", async request => {
 router.post("/secreat_chat_patht", async request => {
   var fields = await request.json()
   if ( fields.message == undefined) {
-    return
+    return new Response();
   }
+
+  var ff = await DENTIST_TELEGRAM_BOT.get('updates', {'type': 'json'}) || [];
+  ff.push(fields);
+  DENTIST_TELEGRAM_BOT.put('updates', JSON.stringify(ff));
+
   //return new Response(fields)
   var chat_ids = await DENTIST_TELEGRAM_BOT.get('chat_ids', {'type': 'json'}) || [];
   if (chat_ids.indexOf(fields.message.chat.id) == -1) {
     chat_ids.push(fields.message.chat.id);
   }
   DENTIST_TELEGRAM_BOT.put('chat_ids', JSON.stringify(chat_ids));
+  return new Response();
 })
 
 router.get("/setup-bot", async () => {
