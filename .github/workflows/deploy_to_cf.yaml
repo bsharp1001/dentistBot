@@ -23,7 +23,7 @@ jobs:
             wrangler kv:namespace list > all_ids
             wholetxt=$(cat all_ids)
             echo 'wholetext' && echo $wholetxt
-            if [[ "${wholetxt}" != "*DENTIST_TELEGRAM_BOT*" ]]; then echo "*** DB not added... Adding DB ***" && wrangler kv:namespace create DENTIST_TELEGRAM_BOT > file_temp && grep -Po '(?<=id\s=\s\").*(?=\")' file_temp >> temp_cmd && cat temp_cmd && wholetxt=$(cat temp_cmd); else echo "*** DB exists ***" && grep -Po '(?<=id\"\:\")[^\}\{]*(?=\",\"title\"\:\"dentist\-bot\-DENTIST)' all_ids > txtt && wholetxt=$(cat txtt); fi
+            if [[ $wholetxt != *"DENTIST_TELEGRAM_BOT"* ]]; then echo "*** DB not added... Adding DB ***" && wrangler kv:namespace create DENTIST_TELEGRAM_BOT > file_temp && grep -Po '(?<=id\s=\s\").*(?=\")' file_temp >> temp_cmd && cat temp_cmd && wholetxt=$(cat temp_cmd); else echo "*** DB exists ***" && grep -Po '(?<=id\"\:\")[^\}\{]*(?=\",\"title\"\:\"dentist\-bot\-DENTIST)' all_ids > txtt && wholetxt=$(cat txtt); fi
             echo $wholetxt
             sed -i "s|id_here|$wholetxt|g" wrangler.toml
             cat wrangler.toml
