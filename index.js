@@ -65,7 +65,7 @@ router.post("/secreat_chat_patht", async request => {
           chat_ids.push(fields.message.chat.id);
         }
         await DENTIST_TELEGRAM_BOT.put('chat_ids', JSON.stringify(chat_ids));
-        await sendMsg(OPT_IN_MSG);
+        await sendMsg(OPT_IN_MSG, [fields.message.chat.id]);
         return new Response();
         break;
       case '/stop':
@@ -73,10 +73,11 @@ router.post("/secreat_chat_patht", async request => {
           ff.push(fields.message);
           await DENTIST_TELEGRAM_BOT.put('stops', JSON.stringify(ff));
           
+          await sendMsg(OPT_OUT_MSG, [fields.message.chat.id]);
+          
           var chat_ids = await DENTIST_TELEGRAM_BOT.get('chat_ids', {'type': 'json'}) || [];
           chat_ids.splice(chat_ids.indexOf(fields.message.chat.id), 1);
           await DENTIST_TELEGRAM_BOT.put('chat_ids', JSON.stringify(chat_ids));
-          await sendMsg(OPT_OUT_MSG);
           return new Response();
         break;
     }
@@ -114,10 +115,10 @@ router.post("/msg", async request => {
   })
 })
 
-async function sendMsg (txt) {
+async function sendMsg (txt, ids = null) {
   
   var url = 'https://api.telegram.org/bot' + BOT_KEY + '/sendMessage';
-  var chat_ids = await DENTIST_TELEGRAM_BOT.get('chat_ids', {'type': 'json'});
+  var chat_ids = ids || await DENTIST_TELEGRAM_BOT.get('chat_ids', {'type': 'json'});
   var dd = [];
   for (let i = 0; i < chat_ids.length; i++) {
     const chat_id = chat_ids[i];
