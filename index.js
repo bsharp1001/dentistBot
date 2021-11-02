@@ -70,8 +70,9 @@ router.get("/setup-bot", async () => {
   };
   var res = await fetch(url, req);
   var webhook_url = BASE_URL + '/secreat_chat_patht';
-  DENTIST_TELEGRAM_BOT.put('webhook_url', webhook_url);
-  return new Response('webhook setup was successful');
+  await DENTIST_TELEGRAM_BOT.put('webhook_url', webhook_url);
+  var dd = await DENTIST_TELEGRAM_BOT.get('webhook_url');
+  return new Response(dd);
 })
 
 /*
