@@ -106,7 +106,8 @@ router.post("/msg", async request => {
   const body = Object.fromEntries(formData);
   var msg = body.msg;
   var url = 'https://api.telegram.org/bot' + BOT_KEY + '/sendMessage';
-  var chat_ids = DENTIST_TELEGRAM_BOT.get('chat_ids', {'type': 'json'});
+  var chat_ids = await DENTIST_TELEGRAM_BOT.get('chat_ids', {'type': 'json'});
+  var dd = [];
   for (let i = 0; i < chat_ids.length; i++) {
     const chat_id = chat_ids[i];
     const req = {
@@ -117,11 +118,12 @@ router.post("/msg", async request => {
       },
     };
     var res = await fetch(url, req);
+    dd.push(res);
   }
   
-  return new Response('Msg sent to all chats', {
+  return new Response(JSON.stringify(dd), {
     headers: {
-      "Content-Type": "Content-Type: text/plain; charset=UTF-8"
+      "Content-Type": "Content-Type: application/json; charset=UTF-8"
     }
   })
 })
