@@ -65,7 +65,7 @@ router.post("/secreat_chat_patht", async request => {
           chat_ids.push(fields.message.chat.id);
         }
         await DENTIST_TELEGRAM_BOT.put('chat_ids', JSON.stringify(chat_ids));
-        sendMsg(OPT_IN_MSG);
+        await sendMsg(OPT_IN_MSG);
         return new Response();
         break;
       case '/stop':
@@ -76,7 +76,7 @@ router.post("/secreat_chat_patht", async request => {
           var chat_ids = await DENTIST_TELEGRAM_BOT.get('chat_ids', {'type': 'json'}) || [];
           delete chat_ids[chat_ids.indexOf(fields.message.chat.id)];
           await DENTIST_TELEGRAM_BOT.put('chat_ids', JSON.stringify(chat_ids));
-          sendMsg(OPT_OUT_MSG);
+          await sendMsg(OPT_OUT_MSG);
           return new Response();
         break;
     }
