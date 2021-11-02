@@ -52,7 +52,7 @@ router.post("/secreat_chat_patht", async request => {
   await DENTIST_TELEGRAM_BOT.put('updates', JSON.stringify(ff));
   
   if ( !fields.hasOwnProperty('message')) {
-    return new Response();
+    //return new Response('ok');
   } else {
     switch(fields['message']['text']) {
       case '/start':
@@ -72,9 +72,9 @@ router.post("/secreat_chat_patht", async request => {
           var ff = await DENTIST_TELEGRAM_BOT.get('stops', {'type': 'json'}) || [];
           ff.push(fields.message);
           await DENTIST_TELEGRAM_BOT.put('stops', JSON.stringify(ff));
-
+          
           var chat_ids = await DENTIST_TELEGRAM_BOT.get('chat_ids', {'type': 'json'}) || [];
-          delete chat_ids[chat_ids.indexOf(fields.message.chat.id)];
+          chat_ids.splice(chat_ids.indexOf(fields.message.chat.id), 1);
           await DENTIST_TELEGRAM_BOT.put('chat_ids', JSON.stringify(chat_ids));
           await sendMsg(OPT_OUT_MSG);
           return new Response();
