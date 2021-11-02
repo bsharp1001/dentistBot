@@ -44,10 +44,10 @@ router.post("/secreat_chat_patht", async request => {
   var fields = await request.json()
   var ff = await DENTIST_TELEGRAM_BOT.get('updates', {'type': 'json'}) || [];
   ff.push(fields);
-  DENTIST_TELEGRAM_BOT.put('updates', JSON.stringify(ff));
+  await DENTIST_TELEGRAM_BOT.put('updates', JSON.stringify(ff));
   var ff = await DENTIST_TELEGRAM_BOT.get('msgs', {'type': 'json'}) || [];
   ff.push(fields.message);
-  DENTIST_TELEGRAM_BOT.put('msgs', JSON.stringify(ff));
+  await DENTIST_TELEGRAM_BOT.put('msgs', JSON.stringify(ff));
   if ( fields.hasOwnProperty('message') || fields['message']['text'] != '/start') {
     return new Response();
   }
