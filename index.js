@@ -48,7 +48,7 @@ router.post("/secreat_chat_patht", async request => {
   var ff = await DENTIST_TELEGRAM_BOT.get('msgs', {'type': 'json'}) || [];
   ff.push(fields.message);
   DENTIST_TELEGRAM_BOT.put('msgs', JSON.stringify(ff));
-  if ( fields.hasOwnProperty('message') || fields.message.text != '/start') {
+  if ( fields.hasOwnProperty('message') || fields['message']['text'] != '/start') {
     return new Response();
   }
 
