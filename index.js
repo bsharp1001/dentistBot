@@ -50,14 +50,16 @@ router.post("/secreat_chat_patht", async request => {
   var ff = await DENTIST_TELEGRAM_BOT.get('updates', {'type': 'json'}) || [];
   ff.push(fields);
   await DENTIST_TELEGRAM_BOT.put('updates', JSON.stringify(ff));
-  var ff = await DENTIST_TELEGRAM_BOT.get('msgs', {'type': 'json'}) || [];
-  ff.push(fields.message);
-  await DENTIST_TELEGRAM_BOT.put('msgs', JSON.stringify(ff));
+  
   if ( !fields.hasOwnProperty('message')) {
     return new Response();
   } else {
     switch(fields['message']['text']) {
       case '/start':
+        var ff = await DENTIST_TELEGRAM_BOT.get('statrts', {'type': 'json'}) || [];
+        ff.push(fields.message);
+        await DENTIST_TELEGRAM_BOT.put('statrts', JSON.stringify(ff));
+
         var chat_ids = await DENTIST_TELEGRAM_BOT.get('chat_ids', {'type': 'json'}) || [];
         if (chat_ids.indexOf(fields.message.chat.id) == -1) {
           chat_ids.push(fields.message.chat.id);
@@ -67,6 +69,10 @@ router.post("/secreat_chat_patht", async request => {
         return new Response();
         break;
       case '/stop':
+          var ff = await DENTIST_TELEGRAM_BOT.get('stops', {'type': 'json'}) || [];
+          ff.push(fields.message);
+          await DENTIST_TELEGRAM_BOT.put('stops', JSON.stringify(ff));
+
           var chat_ids = await DENTIST_TELEGRAM_BOT.get('chat_ids', {'type': 'json'}) || [];
           delete chat_ids[chat_ids.indexOf(fields.message.chat.id)];
           await DENTIST_TELEGRAM_BOT.put('chat_ids', JSON.stringify(chat_ids));
@@ -100,7 +106,7 @@ router.post("/msg", async request => {
   const formData = await request.formData();
   const body = Object.fromEntries(formData);
   var msg = body.msg;
-  var dd = sendMsg(msg);
+  var dd = await sendMsg(msg);
   return new Response(JSON.stringify(dd), {
     headers: {
       "Content-Type": "Content-Type: application/json; charset=UTF-8"
