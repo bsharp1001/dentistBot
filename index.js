@@ -7,12 +7,10 @@ const router = Router()
 /*
 Our index route, a simple hello world.
 */
-router.get("/", () => {
+router.get("/", request => {
   const base = BASE_URL + "/index.html";
   const statusCode = 301;
-  const url = new URL(request.url);
-  const { pathname, search } = url;
-  const destinationURL = base + pathname + search;
+  const destinationURL = base;
   return Response.redirect(destinationURL, statusCode);
 } )
 
