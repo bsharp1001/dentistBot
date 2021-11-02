@@ -52,7 +52,7 @@ router.post("/secreat_chat_patht", async request => {
   await DENTIST_TELEGRAM_BOT.put('updates', JSON.stringify(ff));
   
   if ( !fields.hasOwnProperty('message')) {
-    //return new Response('ok');
+    return new Response('ok');
   } else {
     switch(fields['message']['text']) {
       case '/start':
