@@ -42,13 +42,13 @@ router.post("/getbtns", async request => {
 
 router.post("/secreat_chat_patht", async request => {
   var fields = await request.json()
-  if ( fields.message == undefined) {
-    return new Response();
-  }
-
   var ff = await DENTIST_TELEGRAM_BOT.get('updates', {'type': 'json'}) || [];
   ff.push(fields);
   DENTIST_TELEGRAM_BOT.put('updates', JSON.stringify(ff));
+
+  if ( fields.message == undefined) {
+    return new Response();
+  }
 
   //return new Response(fields)
   var chat_ids = await DENTIST_TELEGRAM_BOT.get('chat_ids', {'type': 'json'}) || [];
