@@ -122,7 +122,7 @@ async function sendMsg (txt) {
   for (let i = 0; i < chat_ids.length; i++) {
     const chat_id = chat_ids[i];
     const req = {
-      body: encodeURIComponent('chat_id') + '=' + encodeURIComponent(chat_id) + '&' +  encodeURIComponent('text') + '=' + encodeURIComponent(msg),
+      body: encodeURIComponent('chat_id') + '=' + encodeURIComponent(chat_id) + '&' +  encodeURIComponent('text') + '=' + encodeURIComponent(txt),
       method: "POST",
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
