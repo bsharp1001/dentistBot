@@ -53,17 +53,31 @@ router.post("/secreat_chat_patht", async request => {
   var ff = await DENTIST_TELEGRAM_BOT.get('msgs', {'type': 'json'}) || [];
   ff.push(fields.message);
   await DENTIST_TELEGRAM_BOT.put('msgs', JSON.stringify(ff));
-  if ( !fields.hasOwnProperty('message') || fields['message']['text'] != '/start') {
+  if ( !fields.hasOwnProperty('message')) {
     return new Response();
+  } else {
+    switch(fields['message']['text']) {
+      case '/start':
+        var chat_ids = await DENTIST_TELEGRAM_BOT.get('chat_ids', {'type': 'json'}) || [];
+        if (chat_ids.indexOf(fields.message.chat.id) == -1) {
+          chat_ids.push(fields.message.chat.id);
+        }
+        await DENTIST_TELEGRAM_BOT.put('chat_ids', JSON.stringify(chat_ids));
+        sendMsg(OPT_IN_MSG);
+        return new Response();
+        break;
+      case '/stop':
+          var chat_ids = await DENTIST_TELEGRAM_BOT.get('chat_ids', {'type': 'json'}) || [];
+          delete chat_ids[chat_ids.indexOf(fields.message.chat.id)];
+          await DENTIST_TELEGRAM_BOT.put('chat_ids', JSON.stringify(chat_ids));
+          sendMsg(OPT_OUT_MSG);
+          return new Response();
+        break;
+    }
   }
-
+  
   //return new Response(fields)
-  var chat_ids = await DENTIST_TELEGRAM_BOT.get('chat_ids', {'type': 'json'}) || [];
-  if (chat_ids.indexOf(fields.message.chat.id) == -1) {
-    chat_ids.push(fields.message.chat.id);
-  }
-  await DENTIST_TELEGRAM_BOT.put('chat_ids', JSON.stringify(chat_ids));
-  return new Response();
+  
 })
 
 router.get("/setup-bot", async () => {
@@ -82,34 +96,20 @@ router.get("/setup-bot", async () => {
   return new Response(dd);
 })
 
-/*
-This route demonstrates path parameters, allowing you to extract fragments from the request
-URL.
-
-Try visit /example/hello and see the response.
-*/
-router.get("/example/:text", ({ params }) => {
-  // Decode text like "Hello%20world" into "Hello world"
-  let input = decodeURIComponent(params.text)
-
-  // Construct a buffer from our input
-  let buffer = Buffer.from(input, "utf8")
-
-  // Serialise the buffer into a base64 string
-  let base64 = buffer.toString("base64")
-
-  // Return the HTML with the string to the client
-  return new Response(`<p>Base64 encoding: <code>${base64}</code></p>`, {
-    headers: {
-      "Content-Type": "text/html"
-    }
-  })
-})
-
 router.post("/msg", async request => {
   const formData = await request.formData();
   const body = Object.fromEntries(formData);
   var msg = body.msg;
+  var dd = sendMsg(msg);
+  return new Response(JSON.stringify(dd), {
+    headers: {
+      "Content-Type": "Content-Type: application/json; charset=UTF-8"
+    }
+  })
+})
+
+async function sendMsg (txt) {
+  
   var url = 'https://api.telegram.org/bot' + BOT_KEY + '/sendMessage';
   var chat_ids = await DENTIST_TELEGRAM_BOT.get('chat_ids', {'type': 'json'});
   var dd = [];
@@ -125,13 +125,8 @@ router.post("/msg", async request => {
     var res = await fetch(url, req);
     dd.push(res);
   }
-  
-  return new Response(JSON.stringify(dd), {
-    headers: {
-      "Content-Type": "Content-Type: application/json; charset=UTF-8"
-    }
-  })
-})
+  return dd;
+}
 
 router.post("/post", async request => {
   // Create a base object with some fields.

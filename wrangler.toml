@@ -6,7 +6,7 @@ workers_dev = true
 route = ""
 zone_id = ""
 compatibility_date = "2021-10-27"
-
+vars = { OPT_IN_MSG = 'you opted in for this bot, You will start receiving notifications from the doctor owning the bot', OPT_OUT_MSG = 'you opted out from this bot, You will stop receiving notifications from the doctor owning the bot' }
 kv_namespaces = [ 
 	{ binding = "DENTIST_TELEGRAM_BOT", id = "id_here" }
 ]
