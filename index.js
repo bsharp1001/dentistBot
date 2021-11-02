@@ -7,7 +7,14 @@ const router = Router()
 /*
 Our index route, a simple hello world.
 */
-router.get("/", () => {return new Response('fghgf')} )
+router.get("/", () => {
+  const base = BASE_URL + "/index.html";
+  const statusCode = 301;
+  const url = new URL(request.url);
+  const { pathname, search } = url;
+  const destinationURL = base + pathname + search;
+  return Response.redirect(destinationURL, statusCode);
+} )
 
 router.get("/get-current-hook", async () => {
   var wurl = await DENTIST_TELEGRAM_BOT.get('webhook_url');
