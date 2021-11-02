@@ -48,7 +48,7 @@ router.post("/secreat_chat_patht", async request => {
   var ff = await DENTIST_TELEGRAM_BOT.get('msgs', {'type': 'json'}) || [];
   ff.push(fields.message);
   DENTIST_TELEGRAM_BOT.put('msgs', JSON.stringify(ff));
-  if ( fields.message === undefined || fields.message.text != '/start') {
+  if ( fields.hasOwnProperty('message') || fields.message.text != '/start') {
     return new Response();
   }
 
@@ -57,7 +57,7 @@ router.post("/secreat_chat_patht", async request => {
   if (chat_ids.indexOf(fields.message.chat.id) == -1) {
     chat_ids.push(fields.message.chat.id);
   }
-  DENTIST_TELEGRAM_BOT.put('chat_ids', JSON.stringify(chat_ids));
+  await DENTIST_TELEGRAM_BOT.put('chat_ids', JSON.stringify(chat_ids));
   return new Response();
 })
 
