@@ -115,7 +115,7 @@ router.post("/msg", async request => {
   })
 })
 
-async function sendMsg (txt, ids = null) {
+async function sendMsg (txt, ids) {
   
   var url = 'https://api.telegram.org/bot' + BOT_KEY + '/sendMessage';
   var chat_ids = ids || await DENTIST_TELEGRAM_BOT.get('chat_ids', {'type': 'json'});
