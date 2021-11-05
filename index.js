@@ -20,12 +20,13 @@ router.get("/get-current-hook", async () => {
   return new Response(wurl)
 })
 
-router.get("/getbtns", () => {
-  // Decode text like "Hello%20world" into "Hello world"
-  let input = DENTIST_TELEGRAM_BOT.get('btns')
-
+router.get("/getbtns", async () => {
+  let input = await __STATIC_CONTENT.list({"prefix": "photos/"})
+  for (let u = 0; u < input.length; u++) {
+    input[u] = input[u]['name'];
+  }
   // Return the HTML with the string to the client
-  return new Response(input, {
+  return new Response(JSON.stringify(input), {
     headers: {
       "Content-Type": "application/json"
     }
@@ -65,7 +66,7 @@ router.post("/secreat_chat_patht", async request => {
           chat_ids.push(fields.message.chat.id);
         }
         await DENTIST_TELEGRAM_BOT.put('chat_ids', JSON.stringify(chat_ids));
-        await sendMsg(OPT_IN_MSG, [fields.message.chat.id]);
+        await sendMsg(OPT_IN_MSG, false, [fields.message.chat.id]);
         return new Response();
         break;
       case '/stop':
@@ -73,7 +74,7 @@ router.post("/secreat_chat_patht", async request => {
           //ff.push(fields.message);
           //await DENTIST_TELEGRAM_BOT.put('stops', JSON.stringify(ff));
           
-          await sendMsg(OPT_OUT_MSG, [fields.message.chat.id]);
+          await sendMsg(OPT_OUT_MSG, false, [fields.message.chat.id]);
           
           var chat_ids = await DENTIST_TELEGRAM_BOT.get('chat_ids', {'type': 'json'}) || [];
           chat_ids.splice(chat_ids.indexOf(fields.message.chat.id), 1);
@@ -106,8 +107,8 @@ router.get("/setup-bot", async () => {
 router.post("/msg", async request => {
   const formData = await request.formData();
   const body = Object.fromEntries(formData);
-  var msg = body.msg;
-  var dd = await sendMsg(msg);
+  var msg = BASE_URL + '/assets/' + body.msg;
+  var dd = await sendMsg(msg, true);
   return new Response(JSON.stringify(dd), {
     headers: {
       "Content-Type": "Content-Type: application/json; charset=UTF-8"
@@ -115,15 +116,17 @@ router.post("/msg", async request => {
   })
 })
 
-async function sendMsg (txt, ids) {
+async function sendMsg (txt, photo = false, ids) {
   
-  var url = 'https://api.telegram.org/bot' + BOT_KEY + '/sendMessage';
+  var url = 'https://api.telegram.org/bot' + BOT_KEY;
+  url = photo ? url + '/sendPhoto' : url + '/sendMessage';
   var chat_ids = ids || await DENTIST_TELEGRAM_BOT.get('chat_ids', {'type': 'json'});
   var dd = [];
   for (let i = 0; i < chat_ids.length; i++) {
     const chat_id = chat_ids[i];
+    var data_to_send_param = photo ? encodeURIComponent('photo') : encodeURIComponent('text');
     const req = {
-      body: encodeURIComponent('chat_id') + '=' + encodeURIComponent(chat_id) + '&' +  encodeURIComponent('text') + '=' + encodeURIComponent(txt),
+      body: encodeURIComponent('chat_id') + '=' + encodeURIComponent(chat_id) + '&' + data_to_send_param + '=' + encodeURIComponent(txt),
       method: "POST",
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',

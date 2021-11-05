@@ -1,6 +1,6 @@
 {
-    "name": "dentist_bot",
-    "short_name": "dentist_bot",
+    "name": "sssa",
+    "short_name": "sssa",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
