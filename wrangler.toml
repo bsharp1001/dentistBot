@@ -1,7 +1,7 @@
 name = "dentist-bot"
 type = "webpack"
 
-account_id = "497c9091d4d353c29d9dd3333e0ecc00"
+account_id = ""
 workers_dev = true
 route = ""
 zone_id = ""
