@@ -20,6 +20,7 @@ jobs:
           preCommands: |
             echo "*** setting up configurations ***"
             echo "*** checking DB ***"
+            wrangler config
             wrangler kv:namespace list > all_ids
             wholetxt=$(cat all_ids)
             echo 'wholetext' && echo $wholetxt
