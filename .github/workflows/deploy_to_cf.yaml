@@ -16,7 +16,7 @@ jobs:
         env:
           USER: root
         with:
-          apiToken: ${{ secrets.CF_CLIENT_API_TOKEN }}
+          apiToken: ${{ secrets.CF__API_TOKEN }}
           preCommands: |
             wrangler config
             echo "*** setting up configurations ***"
