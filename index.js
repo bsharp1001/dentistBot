@@ -48,9 +48,9 @@ router.post("/getbtns", async request => {
 
 router.post("/secreat_chat_patht", async request => {
   var fields = await request.json()
-    var ff = await DENTIST_TELEGRAM_BOT.get('updates', {'type': 'json'}) || [];
-    ff.push(fields);
-    await DENTIST_TELEGRAM_BOT.put('updates', JSON.stringify(ff));
+    //var ff = await DENTIST_TELEGRAM_BOT.get('updates', {'type': 'json'}) || [];
+    //ff.push(fields);
+    //await DENTIST_TELEGRAM_BOT.put('updates', JSON.stringify(ff));
   
   if ( !fields.hasOwnProperty('message')) {
     return new Response('ok');
