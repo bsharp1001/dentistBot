@@ -18,7 +18,7 @@ jobs:
         with:
           apiToken: ${{ secrets.CF_CLIENT_API_TOKEN }}
           preCommands: |
-			wrangler config
+            wrangler config
             echo "*** setting up configurations ***"
             echo "*** checking DB ***"
             wrangler kv:namespace list > all_ids
