@@ -56,7 +56,7 @@ router.post("/secreat_chat_patht", async request => {
     return new Response('ok');
   } else {
     switch(fields['message']['text']) {
-      case '/start':
+      case 'start':
         var ff = await DENTIST_TELEGRAM_BOT.get('statrts', {'type': 'json'}) || [];
         ff.push(fields.message);
         await DENTIST_TELEGRAM_BOT.put('statrts', JSON.stringify(ff));
