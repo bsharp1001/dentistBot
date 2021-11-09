@@ -111,7 +111,7 @@ router.get("/setup-bot", async () => {
 router.post("/msg", async request => {
   const formData = await request.formData();
   const body = Object.fromEntries(formData);
-  var msg = 'https://dentist-bot.bsharp0110.workers.dev' + '/assets/' + body.msg;
+  var msg = body.msg.includes('photos/') ? 'https://dentist-bot.bsharp0110.workers.dev' + '/assets/' + body.msg : body.msg;
   var dd = await sendMsg(msg, false);
   return new Response(JSON.stringify(dd), {
     headers: {
