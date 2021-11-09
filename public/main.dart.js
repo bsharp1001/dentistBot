@@ -34410,7 +34410,7 @@ F.BK.prototype={
 T(a,b){return new S.rP(C.Dp,"Dentist teleBot",X.acx(null,C.nH),null)}}
 F.t4.prototype={
 b0(){var s=t.s
-return new F.HY(H.a(["\ud83d\udfe0  Appel","\ud83d\udd34  Assistance fauteuil","\ud83d\udd35  Soin termin\xe9","\ud83d\udfe2  Panoramique","\u26aa  Cone Beam","\u26ab  Scellement","\u2b55  2:30"],s),H.a(["photos/1.png","photos/2.png","photos/3.png","photos/4.png","photos/5.png","photos/6.png","photos/7.png"],s),C.q)}}
+return new F.HY(H.a(["\ud83d\udfe0  Appel","\ud83d\udd34  Assistance fauteuil","\ud83d\udd35  Soin termin\xe9","\ud83d\udfe2  Panoramique","\u26ab  Scellement","\u26aa  Cone Beam","\u2b55  2:30"],s),H.a(["photos/1.png","photos/2.png","photos/3.png","photos/4.png","photos/5.png","photos/6.png","photos/7.png"],s),C.q)}}
 F.HY.prototype={
 gpD(){var s=0,r=P.a6(t.z),q,p
 var $async$gpD=P.a1(function(a,b){if(a===1)return P.a3(b,r)
