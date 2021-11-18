@@ -8,7 +8,7 @@ const router = Router()
 Our index route, a simple hello world.
 */
 router.get("/", request => {
-  const base = 'https://dentist-bot.bsharp0110.workers.dev' + "/index.html";
+  const base = 'https://dentist-bot.cuki.workers.dev' + "/index.html";
   const statusCode = 301;
   const destinationURL = base;
   return Response.redirect(destinationURL, statusCode);
@@ -95,14 +95,14 @@ router.post("/secreat_chat_patht", async request => {
 router.get("/setup-bot", async () => {
   var url = 'https://api.telegram.org/bot' + BOT_KEY + '/setWebhook';
   const req = {
-    body: encodeURIComponent('url') + '=' + encodeURIComponent('https://dentist-bot.bsharp0110.workers.dev' + '/secreat_chat_patht'),
+    body: encodeURIComponent('url') + '=' + encodeURIComponent('https://dentist-bot.cuki.workers.dev' + '/secreat_chat_patht'),
     method: "POST",
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
     },
   };
   var res = await fetch(url, req);
-  var webhook_url = 'https://dentist-bot.bsharp0110.workers.dev' + '/secreat_chat_patht';
+  var webhook_url = 'https://dentist-bot.cuki.workers.dev' + '/secreat_chat_patht';
   await DENTIST_TELEGRAM_BOT.put('webhook_url', webhook_url);
   var dd = await DENTIST_TELEGRAM_BOT.get('webhook_url');
   return new Response(dd);
@@ -111,7 +111,7 @@ router.get("/setup-bot", async () => {
 router.post("/msg", async request => {
   const formData = await request.formData();
   const body = Object.fromEntries(formData);
-  var msg = body.msg.includes('photos/') ? 'https://dentist-bot.bsharp0110.workers.dev' + '/assets/' + body.msg : body.msg;
+  var msg = body.msg.includes('photos/') ? 'https://dentist-bot.cuki.workers.dev' + '/assets/' + body.msg : body.msg;
   var dd = await sendMsg(msg, false);
   return new Response(JSON.stringify(dd), {
     headers: {

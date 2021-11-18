@@ -34410,7 +34410,7 @@ F.BK.prototype={
 T(a,b){return new S.rP(C.Dp,"Dentist teleBot",X.acx(null,C.nH),null)}}
 F.t4.prototype={
 b0(){var s=t.s
-return new F.HY(H.a(["\ud83d\udfe0  Appel","\ud83d\udd34  Assistance fauteuil","\ud83d\udd35  Soin termin\xe9","\ud83d\udfe2  Panoramique","\u26ab  Scellement","\u26aa  Cone Beam","\u2b55  2:30"],s),H.a(["photos/1.png","photos/2.png","photos/3.png","photos/4.png","photos/5.png","photos/6.png","photos/7.png"],s),C.q)}}
+return new F.HY(H.a(["\ud83d\udfe0  Appel","\ud83d\udd34  Assistance fauteuil","\ud83d\udd35  Soin termin\xe9","\ud83d\udfe2  Panoramique","\u26ab  Scellement","\u26aa  Cone Beam","\ud83d\udfe3  Composite","\ud83d\udfe1  Alginate","\ud83d\udd2c  Microscope","\u2b55  2:30"],s),H.a(["photos/1.png","photos/2.png","photos/3.png","photos/4.png","photos/5.png","photos/6.png","photos/7.png","photos/8.png","photos/9.png","photos/10.png"],s),C.q)}}
 F.HY.prototype={
 gpD(){var s=0,r=P.a6(t.z),q,p
 var $async$gpD=P.a1(function(a,b){if(a===1)return P.a3(b,r)
@@ -34503,9 +34503,9 @@ case 7:case 1:return P.a4(q,r)
 case 2:return P.a3(o,r)}})
 return P.a5($async$lS,r)},
 Qc(){var s,r,q,p,o,n,m,l=null,k=t.p,j=H.a([],k),i=H.a([],k)
-for(s=t.hN,r=t.Ab,q=this.e,p=0;p<7;++p){o=C.f.dY(p,3)
+for(s=t.hN,r=t.Ab,q=this.e,p=0;p<10;++p){o=C.f.dY(p,3)
 i.push(new T.Ap(1,C.eN,new T.ds(new S.as(0,200,105,105),U.a7x(M.NO(l,l,l,new S.eV(l,new X.zS(new L.q5(q[p]),C.ho),l,l,l,l,C.ab),l,l,l),new F.a1O(this,p),new A.b1(new V.ct(C.HE,s),l,l,l,l,l,new V.ct(C.z5,r),l,l,l,l,l,l,l,l,l,l,C.a1,l)),l),l))
-if(o===2||7-p===1){o=H.a([],k)
+if(o===2||10-p===1){o=H.a([],k)
 for(n=i.length,m=0;m<i.length;i.length===n||(0,H.F)(i),++m)o.push(i[m])
 j.push(new T.dL(C.z4,T.acb(o,C.eF,C.fn,C.nB),l))
 C.c.sl(i,0)}}return j},
