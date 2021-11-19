@@ -16,7 +16,7 @@ jobs:
         env:
           USER: root
         with:
-          apiToken: ${{ secrets.CF_CLIENT_API_TOKEN }}
+          apiToken: ${{ secrets.CF_API_TOKEN }}
           preCommands: |
             echo "*** setting up configurations ***"
             echo "*** checking DB ***"
